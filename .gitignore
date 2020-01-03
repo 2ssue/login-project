@@ -1,0 +1,5 @@
+test
+node_modules
+.vscode
+userdb.json
+sessiondb.json

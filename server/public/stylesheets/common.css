@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
+html{
+    background-color: var(--background-color);
+    font-size: 16px;
+    --background-color: #ebe9e9;
+    --main-color: #2ab162;
+    --input-height: 50px;
+    --default-space: 10px;
+}
+
+.show{
+    display: inline;
+}
+
+.unshow{
+    display: none;
+}
+
+body{
+    display: flex;
+    flex-flow: column wrap;
+    font-family: "Noto Sans KR";
+    max-width: 450px;
+    margin: auto;
+    padding: var(--default-space);
+}
+
+h1{
+    text-align: center;
+    color: var(--main-color);
+    font-weight: bold;
+    font-size: 3em;
+    margin: var(--default-space);
+}
+
+footer nav{
+    text-align: right;
+}
+
+footer nav a {
+    color: gray;
+    margin-left: 5px;
+}
+
+main{
+    max-width: -webkit-fill-available;
+}
+main div{
+    margin-bottom: var(--default-space);
+}
+
+label{
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type=text], input[type=password], input[type=number], select{
+    width: -webkit-fill-available;
+    height: var(--input-height);
+    padding: 0 0 0 var(--default-space);
+    border: none;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+input[type=checkbox]{
+    vertical-align: text-bottom;
+}
+
+button{
+    border-radius: 5px;
+    background-color: var(--main-color);
+    border: none;
+    color: white;
+    font-weight: bold;
+    height: var(--input-height);
+    width: -webkit-fill-available;
+    font-size: 1.1em;
+}
+
+.button-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-container *{
+    flex: 0.48;
+}
+
+.birth {
+    display: flex;
+    justify-content: space-between;
+}
+
+.birth *{
+    flex: 0.32;
+    min-width: 100px;
+}

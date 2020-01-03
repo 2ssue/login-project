@@ -1,0 +1,19 @@
+doctype html
+html(lang='ko')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width')
+    title= 멤버십
+    link(rel='stylesheet', href='/stylesheets/common.css')
+  body
+    header
+      h1= title
+    main
+      block content
+    footer
+      hr
+      nav
+        a#link-login(href='/login') 로그인
+        a#link-signup(href='/signup') 회원가입
+        a#link-logout(href='/') 로그아웃
+    script(src='./javascripts/index.js')
