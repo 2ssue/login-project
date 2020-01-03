@@ -1,25 +1,18 @@
 {
-  "name": "membership-login",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
+  "name": "server",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/2ssue/membership-login.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/2ssue/membership-login/issues"
-  },
-  "homepage": "https://github.com/2ssue/membership-login#readme",
   "dependencies": {
-    "express-generator": "^4.16.1"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "lowdb": "^1.0.0",
+    "morgan": "~1.9.1",
+    "pug": "^2.0.4",
+    "uuid": "^3.3.3"
   }
 }
