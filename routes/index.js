@@ -1,27 +1,24 @@
-var express = require('express');
-var router = express.Router();
+/**
+ * root routing
+ */
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('layout');
+const express = require("express");
+const router = express.Router();
+
+router.get("/", function(req, res, next) {
+  res.render("layout");
 });
 
-router.get('/login', function(req, res, next) {
-  res.render('layout');
+router.get("/login", function(req, res, next) {
+  res.render("layout");
 });
 
-router.get('/signup', function(req, res, next) {
-  res.render('layout');
+router.get("/signup", function(req, res, next) {
+  res.render("layout");
 });
 
-router.get('/main', function(req, res, next) {
-  res.render('layout', {
-      titie: '로그인 성공',
-      content: `${req.body.name}님 반갑습니다`,
-      footer1: 'unshow',
-      footer2: 'unshow',
-      footer3: 'show'
-  });
+router.get("/main", function(req, res, next) {
+  res.redirect("/");
 });
 
 module.exports = router;
