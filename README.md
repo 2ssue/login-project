@@ -1,6 +1,9 @@
 # Login-SignIn Project
 
-lowdb를 활용한 세션DB를 만들어 회원가입, 로그인 과정을 구현하는 프로젝트
+- 프론트엔드
+  - 바닐라 JS를 활용해 SPA 구조로 회원가입, 로그인을 구현
+- 백엔드
+  - lowdb를 활용한 세션DB를 만들어 회원가입, 로그인 과정을 구현하는 프로젝트
 
 ## [🏠배포 페이지](https://pacific-beyond-61707.herokuapp.com/)
 
