@@ -1,5 +1,6 @@
-import { Enum } from "./enum.js";
-import { MESSAGE } from "./enum.js";
+import { Enum } from './enum.js';
+import { SIGN_UP_MESSAGE } from './enum.js';
+import { get } from '../utils/fetch.js';
 
 function setMessage(element, message, className) {
   element.innerHTML = message;
@@ -31,104 +32,108 @@ const Validation = {
     this.checkHobby();
   },
   checkIdHandler() {
-    const idInput = document.getElementById("userid");
+    const idInput = document.getElementById('userid');
     const message = idInput.parentNode.lastElementChild;
 
-    const validateId = function() {
+    const validateId = function () {
       if (idInput.value === Enum.NULL_CONTENT) return;
 
       const checkId = idInput.value.match(/^[a-z0-9-_]{5,20}$/);
       if (checkId !== null && idInput.value === checkId[0]) {
-        get(`enroll/user?id=${idInput.value}`).then(res => {
-          if (res === "true") {
-            setMessage(message, MESSAGE.ID.VALID, Enum.VALID_CLASS);
+        get(`enroll/user?id=${idInput.value}`).then((res) => {
+          if (res === 'true') {
+            setMessage(message, SIGN_UP_MESSAGE.ID.VALID, Enum.VALID_CLASS);
             this.id = true;
           } else {
-            setMessage(message, MESSAGE.ID.USED, Enum.INVALID_CLASS);
+            setMessage(message, SIGN_UP_MESSAGE.ID.USED, Enum.INVALID_CLASS);
             this.id = false;
           }
         });
       } else {
-        setMessage(message, MESSAGE.ID.INVALID, Enum.INVALID_CLASS);
+        setMessage(message, SIGN_UP_MESSAGE.ID.INVALID, Enum.INVALID_CLASS);
         this.id = false;
       }
     };
 
-    idInput.addEventListener("blur", validateId.bind(this));
-    idInput.addEventListener("keyup", () => {
+    idInput.addEventListener('blur', validateId.bind(this));
+    idInput.addEventListener('keyup', () => {
       if (Enum.NULL_CONTENT === idInput.value) {
         resetMessage(message);
       }
     });
   },
   checkPasswordHandler() {
-    const passwordInput = document.getElementById("password");
-    const passwordChecker = document.getElementById("re-password");
+    const passwordInput = document.getElementById('password');
+    const passwordChecker = document.getElementById('re-password');
     const message = passwordInput.parentNode.lastElementChild;
     const checkMessage = passwordChecker.parentNode.lastElementChild;
 
-    const validatePassword = function() {
+    const validatePassword = function () {
       if (passwordInput.value === Enum.NULL_CONTENT) return;
 
       const checkPassword = passwordInput.value.match(
-        /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/
+        /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/,
       );
       if (checkPassword !== null && passwordInput.value === checkPassword[0]) {
-        setMessage(message, MESSAGE.PASSWORD.VALID, Enum.VALID_CLASS);
+        setMessage(message, SIGN_UP_MESSAGE.PASSWORD.VALID, Enum.VALID_CLASS);
         this.password = true;
       } else {
-        let errorMessage = "";
+        let errorMessage = '';
         this.password = false;
 
         if (!passwordInput.value.match(/^.{8,16}$/)) {
-          errorMessage = MESSAGE.PASSWORD.INVALID_LENGTH;
+          errorMessage = SIGN_UP_MESSAGE.PASSWORD.INVALID_LENGTH;
         } else if (!passwordInput.value.match(/[A-Z]+/)) {
-          errorMessage = MESSAGE.PASSWORD.INVALID_UPPERCASE;
+          errorMessage = SIGN_UP_MESSAGE.PASSWORD.INVALID_UPPERCASE;
         } else if (!passwordInput.value.match(/\d+/)) {
-          errorMessage = MESSAGE.PASSWORD.INVALID_NUMBER;
+          errorMessage = SIGN_UP_MESSAGE.PASSWORD.INVALID_NUMBER;
         } else if (!passwordInput.value.match(/[!@#$%^&+=]+/)) {
-          errorMessage = MESSAGE.PASSWORD.INVALID_CHARACTER;
+          errorMessage = SIGN_UP_MESSAGE.PASSWORD.INVALID_CHARACTER;
         }
 
         setMessage(message, errorMessage, Enum.INVALID_CLASS);
       }
     };
 
-    const checkSamePassword = function() {
+    const checkSamePassword = function () {
       if (passwordInput.value === Enum.NULL_CONTENT) return;
       if (passwordChecker.value === Enum.NULL_CONTENT) return;
       if (passwordInput.value === passwordChecker.value) {
-        setMessage(checkMessage, MESSAGE.PASSWORD.SAME, Enum.VALID_CLASS);
+        setMessage(
+          checkMessage,
+          SIGN_UP_MESSAGE.PASSWORD.SAME,
+          Enum.VALID_CLASS,
+        );
         if (message.className === Enum.VALID_CLASS) this.password = true;
       } else {
         setMessage(
           checkMessage,
-          MESSAGE.PASSWORD.DIFFERENT,
-          Enum.INVALID_CLASS
+          SIGN_UP_MESSAGE.PASSWORD.DIFFERENT,
+          Enum.INVALID_CLASS,
         );
         this.password = false;
       }
     };
 
-    passwordInput.addEventListener("keyup", validatePassword.bind(this));
-    passwordInput.addEventListener("keyup", checkSamePassword.bind(this));
-    passwordChecker.addEventListener("keyup", checkSamePassword.bind(this));
+    passwordInput.addEventListener('keyup', validatePassword.bind(this));
+    passwordInput.addEventListener('keyup', checkSamePassword.bind(this));
+    passwordChecker.addEventListener('keyup', checkSamePassword.bind(this));
 
-    passwordInput.addEventListener("keyup", () => {
+    passwordInput.addEventListener('keyup', () => {
       if (Enum.NULL_CONTENT === passwordInput.value) {
         resetMessage(message);
       }
     });
 
-    passwordChecker.addEventListener("keyup", () => {
+    passwordChecker.addEventListener('keyup', () => {
       if (Enum.NULL_CONTENT === passwordChecker.value) {
         resetMessage(checkMessage);
       }
     });
   },
   checkName() {
-    const inputName = document.getElementById("name");
-    inputName.addEventListener("keyup", () => {
+    const inputName = document.getElementById('name');
+    inputName.addEventListener('keyup', () => {
       if (inputName.value === Enum.NULL_CONTENT) {
         this.name = false;
       } else {
@@ -137,10 +142,10 @@ const Validation = {
     });
   },
   checkBirth() {
-    const inputYear = document.getElementById("year");
-    const selectMonth = document.getElementById("month");
-    const inputDate = document.getElementById("date");
-    const message = document.querySelector(".birth+span");
+    const inputYear = document.getElementById('year');
+    const selectMonth = document.getElementById('month');
+    const inputDate = document.getElementById('date');
+    const message = document.querySelector('.birth+span');
     const dateRange = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     message.className = Enum.INVALID_CLASS;
@@ -153,19 +158,19 @@ const Validation = {
       const gap = currentYear - year;
 
       if (year === Enum.NULL_CONTENT) {
-        message.innerHTML = MESSAGE.BIRTH.EMPTY_YEAR;
+        message.innerHTML = SIGN_UP_MESSAGE.BIRTH.EMPTY_YEAR;
         this.birth = false;
       } else if (gap >= 15 && gap <= 99) {
         if (month === Enum.NULL_CONTENT) {
-          message.innerHTML = MESSAGE.BIRTH.EMPTY_MONTH;
+          message.innerHTML = SIGN_UP_MESSAGE.BIRTH.EMPTY_MONTH;
           this.birth = false;
         } else {
           if (date === Enum.NULL_CONTENT) {
-            message.innerHTML = MESSAGE.BIRTH.EMPTY_DATE;
+            message.innerHTML = SIGN_UP_MESSAGE.BIRTH.EMPTY_DATE;
             this.birth = false;
           } else {
             if (date > dateRange[month - 1] || date < 1) {
-              message.innerHTML = MESSAGE.BIRTH.INVALID_DATE;
+              message.innerHTML = SIGN_UP_MESSAGE.BIRTH.INVALID_DATE;
               this.birth = false;
             } else {
               message.innerHTML = Enum.NULL_CONTENT;
@@ -174,26 +179,26 @@ const Validation = {
           }
         }
       } else {
-        message.innerHTML = `${gap}${MESSAGE.BIRTH.INVALID_YEAR}`;
+        message.innerHTML = `${gap}${SIGN_UP_MESSAGE.BIRTH.INVALID_YEAR}`;
         this.birth = false;
       }
     };
 
-    inputYear.addEventListener("keyup", () => {
+    inputYear.addEventListener('keyup', () => {
       validateBirth();
     });
 
-    selectMonth.addEventListener("change", () => {
+    selectMonth.addEventListener('change', () => {
       validateBirth();
     });
 
-    inputDate.addEventListener("keyup", () => {
+    inputDate.addEventListener('keyup', () => {
       validateBirth();
     });
   },
-  checkGender: function() {
-    const selectGender = document.getElementById("gender");
-    selectGender.addEventListener("change", () => {
+  checkGender: function () {
+    const selectGender = document.getElementById('gender');
+    selectGender.addEventListener('change', () => {
       if (selectGender.value === Enum.NULL_CONTENT) {
         this.gender = false;
       } else {
@@ -201,13 +206,13 @@ const Validation = {
       }
     });
   },
-  checkEmail: function() {
-    const inputEmail = document.getElementById("email");
+  checkEmail: function () {
+    const inputEmail = document.getElementById('email');
     const message = inputEmail.parentNode.lastElementChild;
 
-    inputEmail.addEventListener("keyup", () => {
+    inputEmail.addEventListener('keyup', () => {
       const checkValidation = inputEmail.value.match(
-        /(\w+\.)*\w+@(\w+\.)+[A-Za-z]{2,3}/
+        /(\w+\.)*\w+@(\w+\.)+[A-Za-z]{2,3}/,
       );
       if (checkValidation) {
         message.innerHTML = Enum.NULL_CONTENT;
@@ -217,18 +222,18 @@ const Validation = {
         this.email = false;
       } else {
         message.className = Enum.INVALID_CLASS;
-        message.innerHTML = MESSAGE.EMAIL.INVALID;
+        message.innerHTML = SIGN_UP_MESSAGE.EMAIL.INVALID;
         this.email = false;
       }
     });
   },
-  checkPhone: function() {
-    const inputPhone = document.getElementById("phone");
+  checkPhone: function () {
+    const inputPhone = document.getElementById('phone');
     const message = inputPhone.parentNode.lastElementChild;
 
-    inputPhone.addEventListener("keyup", () => {
+    inputPhone.addEventListener('keyup', () => {
       const checkValidation = inputPhone.value.match(
-        /^(?=[\d]{10,11})(010[\d]+)$/
+        /^(?=[\d]{10,11})(010[\d]+)$/,
       );
 
       if (checkValidation) {
@@ -238,17 +243,17 @@ const Validation = {
         message.innerHTML = Enum.NULL_CONTENT;
         this.phone = false;
       } else {
-        message.innerHTML = MESSAGA.PHONE.INVALID;
+        message.innerHTML = SIGN_UP_MESSAGE.PHONE.INVALID;
         message.className = Enum.INVALID_CLASS;
         this.phone = false;
       }
     });
   },
-  checkHobby: function() {
-    const tagInput = document.getElementById("hobby");
-    const tagContainer = document.querySelector(".tag-container");
-    const message = document.querySelector(".tag-section+span");
-    tagInput.addEventListener("keyup", () => {
+  checkHobby: function () {
+    const tagInput = document.getElementById('hobby');
+    const tagContainer = document.querySelector('.tag-container');
+    const message = document.querySelector('.tag-section+span');
+    tagInput.addEventListener('keyup', () => {
       setTimeout(() => {
         if (tagContainer.childElementCount >= 3) {
           this.hobby = true;
@@ -258,30 +263,30 @@ const Validation = {
           if (tagInput.value === Enum.NULL_CONTENT) {
             message.innerHTML = Enum.NULL_CONTENT;
           } else {
-            message.innerHTML = MESSAGE.HOBBY.INVALID;
+            message.innerHTML = SIGN_UP_MESSAGE.HOBBY.INVALID;
             message.className = Enum.INVALID_CLASS;
           }
         }
       }, 1);
     });
   },
-  checkAgree: function() {
-    const agree = document.getElementById("agree");
+  checkAgree: function () {
+    const agree = document.getElementById('agree');
     this.agree = agree.checked;
   },
-  validateResult: function() {
+  validateResult: function () {
     this.checkAgree();
-    if (!this.id) return MESSAGE.ID.NAME;
-    else if (!this.password) return MESSAGE.PASSWORD.NAME;
-    else if (!this.name) return MESSAGE.NAME.NAME;
-    else if (!this.birth) return MESSAGE.BIRTH.NAME;
-    else if (!this.gender) return MESSAGE.GENDER.NAME;
-    else if (!this.email) return MESSAGE.EMAIL.NAME;
-    else if (!this.phone) return MESSAGE.PHONE.NAME;
-    else if (!this.hobby) return MESSAGE.HOBBY.NAME;
-    else if (!this.agree) return MESSAGE.AGREE.NAME;
-    else return "";
-  }
+    if (!this.id) return SIGN_UP_MESSAGE.ID.NAME;
+    else if (!this.password) return SIGN_UP_MESSAGE.PASSWORD.NAME;
+    else if (!this.name) return SIGN_UP_MESSAGE.NAME.NAME;
+    else if (!this.birth) return SIGN_UP_MESSAGE.BIRTH.NAME;
+    else if (!this.gender) return SIGN_UP_MESSAGE.GENDER.NAME;
+    else if (!this.email) return SIGN_UP_MESSAGE.EMAIL.NAME;
+    else if (!this.phone) return SIGN_UP_MESSAGE.PHONE.NAME;
+    else if (!this.hobby) return SIGN_UP_MESSAGE.HOBBY.NAME;
+    else if (!this.agree) return SIGN_UP_MESSAGE.AGREE.NAME;
+    else return '';
+  },
 };
 
 export default Validation;
