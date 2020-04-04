@@ -1,8 +1,8 @@
-const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
-const uuid = require("uuid/v1");
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const uuid = require('uuid/v1');
 
-const adapter = new FileSync("sessions/sessiondb.json");
+const adapter = new FileSync('sessions/sessiondb.json');
 const db = low(adapter);
 
 db.defaults({ sessions: [] }).write();
@@ -21,13 +21,13 @@ const enrollSession = {
    * @param {String} name
    */
   addSession(sessionId, id, name) {
-    db.get("sessions")
+    db.get('sessions')
       .push({
         sessionID: sessionId,
         userInfo: {
           id: id,
-          name: name
-        }
+          name: name,
+        },
       })
       .write();
 
@@ -39,9 +39,7 @@ const enrollSession = {
    * @param {String} id session id
    */
   deleteSession(id) {
-    db.get("sessions")
-      .remove({ sessionID: id })
-      .write();
+    db.get('sessions').remove({ sessionID: id }).write();
 
     return true;
   },
@@ -52,10 +50,7 @@ const enrollSession = {
    * @return {Object||Boolean} if session exist return session object else false
    */
   findSession(id) {
-    const session = db
-      .get("sessions")
-      .find({ sessionID: id })
-      .value();
+    const session = db.get('sessions').find({ sessionID: id }).value();
 
     return session ? session : false;
   },
@@ -66,7 +61,7 @@ const enrollSession = {
    */
   generateSessionID() {
     return uuid();
-  }
+  },
 };
 
 module.exports = enrollSession;

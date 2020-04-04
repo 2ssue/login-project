@@ -1,36 +1,36 @@
-import { Enum } from "./enum.js";
+import { Enum } from './enum.js';
 
 const MakeTag = {
-  enrollEventListener: function() {
+  enrollEventListener: function () {
     this.makeHobbyTag();
   },
-  makeHobbyTag: function() {
-    const inputHobby = document.getElementById("hobby");
-    const container = document.querySelector(".tag-container");
+  makeHobbyTag: function () {
+    const inputHobby = document.getElementById('hobby');
+    const container = document.querySelector('.tag-container');
 
-    inputHobby.addEventListener("keyup", () => {
+    inputHobby.addEventListener('keyup', () => {
       if (/,/.test(inputHobby.value)) {
-        const checkInput = inputHobby.value.match(/[^,]+(?=,)/g) || "";
-        const split = inputHobby.value.split(",") || "";
+        const checkInput = inputHobby.value.match(/[^,]+(?=,)/g) || '';
+        const split = inputHobby.value.split(',') || '';
 
         for (const element of checkInput) {
-          const tag = document.createElement("span");
+          const tag = document.createElement('span');
 
-          const tagElement = document.createElement("span");
+          const tagElement = document.createElement('span');
           tagElement.innerHTML = element;
-          tagElement.className = "tag-element";
+          tagElement.className = 'tag-element';
 
-          const close = document.createElement("span");
-          close.innerHTML = "&times;";
-          close.className = "close";
+          const close = document.createElement('span');
+          close.innerHTML = '&times;';
+          close.className = 'close';
 
-          tag.className = "tag";
+          tag.className = 'tag';
           tag.appendChild(tagElement);
           tag.appendChild(close);
 
           container.appendChild(tag);
 
-          close.addEventListener("click", () => {
+          close.addEventListener('click', () => {
             close.parentNode.remove();
           });
 
@@ -40,8 +40,8 @@ const MakeTag = {
       }
     });
 
-    inputHobby.addEventListener("keydown", e => {
-      if (e.key === "Backspace" || e.key === "Delete") {
+    inputHobby.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' || e.key === 'Delete') {
         if (
           container.hasChildNodes() &&
           inputHobby.value === Enum.NULL_CONTENT
@@ -53,7 +53,7 @@ const MakeTag = {
         }
       }
     });
-  }
+  },
 };
 
 export default MakeTag;

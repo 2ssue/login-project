@@ -1,6 +1,6 @@
-const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
-const adapter = new FileSync("db/userdb.json");
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('db/userdb.json');
 const db = low(adapter);
 
 db.defaults({ users: [] }).write();
@@ -18,7 +18,7 @@ const enrollUser = {
    */
   addUser(data) {
     if (this.getUserById(data.id) !== undefined) return false;
-    db.get("users")
+    db.get('users')
       .push({
         id: data.userid,
         password: data.password,
@@ -27,7 +27,7 @@ const enrollUser = {
         gender: data.gender,
         email: data.email,
         phone: data.phone,
-        hobby: data.hobby
+        hobby: data.hobby,
       })
       .write();
     return true;
@@ -39,10 +39,7 @@ const enrollUser = {
    * @return {Object} user data object
    */
   getUserById(id) {
-    const user = db
-      .get("users")
-      .find({ id: id })
-      .value();
+    const user = db.get('users').find({ id: id }).value();
     return user;
   },
   /**
@@ -53,7 +50,7 @@ const enrollUser = {
    */
   getUserName(id) {
     return this.getUserById(id).name;
-  }
+  },
 };
 
 module.exports = enrollUser;
