@@ -3,8 +3,8 @@
  */
 
 const express = require('express');
-const enrollUser = require('../db/enrollUser.js');
-const enrollSession = require('../sessions/enrollSession.js');
+const enrollUser = require('../db/users/enrollUser.js');
+const enrollSession = require('../db/sessions/enrollSession.js');
 const router = express.Router();
 
 /**

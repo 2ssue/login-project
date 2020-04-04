@@ -4,7 +4,7 @@
 
 const express = require('express');
 const router = express.Router();
-const enrollUser = require('../db/enrollUser.js');
+const enrollUser = require('../db/users/enrollUser.js');
 
 router.get('/', function (req, res, next) {
   res.redirect('/');
