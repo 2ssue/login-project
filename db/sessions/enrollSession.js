@@ -2,7 +2,7 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const uuid = require('uuid/v1');
 
-const adapter = new FileSync('sessions/sessiondb.json');
+const adapter = new FileSync('./db/sessions/sessiondb.json');
 const db = low(adapter);
 
 db.defaults({ sessions: [] }).write();
