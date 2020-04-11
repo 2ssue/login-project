@@ -26,7 +26,7 @@ const login = (req, res, next) => {
   } else {
     result = { result: 'fail' };
   }
-  res.send(JSON.stringify(result));
+  res.json(result);
 };
 
 router.post('/', login);
