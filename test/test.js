@@ -30,6 +30,24 @@ describe('로그인 테스트', () => {
         assert.equal(res.body.result, 'find');
       });
   });
+
+  it('세션 파기 체크 테스트', () => {
+    request(app)
+      .get('/user/expire')
+      .set('Cookie', [`loginSession=${cookies.loginSession}`])
+      .expect(200)
+      .end((err, res) => {
+        assert.equal(res.body.result, 'success');
+
+        request(app)
+          .get('/user')
+          .set('Cookie', [`loginSession=${cookies.loginSession}`])
+          .expect(200)
+          .end((err, res) => {
+            assert.equal(res.body.result, 'none');
+          });
+      });
+  });
 });
 
 describe('회원가입 테스트', () => {
