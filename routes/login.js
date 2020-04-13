@@ -57,12 +57,12 @@ router.get('/', checkCookie, function (req, res, next) {
       result: 'none',
     };
   }
-  res.send(JSON.stringify(result));
+  res.json(result);
 });
 
 router.get('/expire', function (req, res, next) {
   if (enrollSession.deleteSession(req.cookies.loginSession)) {
-    res.send(JSON.stringify({ result: 'success' }));
+    res.json({ result: 'success' });
   }
 });
 

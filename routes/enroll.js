@@ -17,9 +17,9 @@ router.get('/user', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
   if (enrollUser.addUser(req.body)) {
-    res.send(JSON.stringify({ result: 'success' }));
+    res.json({ result: 'success' });
   } else {
-    res.send(JSON.stringify({ result: 'fail' }));
+    res.json({ result: 'fail' });
   }
 });
 
