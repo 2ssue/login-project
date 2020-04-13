@@ -1,40 +1,48 @@
-/**
- * login routing
- */
-
 const express = require('express');
 const enrollUser = require('../db/users/enrollUser.js');
 const enrollSession = require('../db/sessions/enrollSession.js');
 const router = express.Router();
 
+router.post('/', login).get('/', checkSessionExist, (req, res, next) => {
+  if (!req.isLogin) {
+    res.json({ result: 'none' });
+    return;
+  }
+
+  res.json({
+    result: 'find',
+    name: req.name,
+  });
+});
+
+router.get('/expire', (req, res, next) => {
+  if (enrollSession.deleteSession(req.cookies.loginSession)) {
+    res.json({ result: 'success' });
+  }
+});
+
 /**
  * send login result by Checking Database
  */
-const login = (req, res, next) => {
+function login(req, res, next) {
   const user = enrollUser.getUserById(req.body.userid);
-  let result;
-  if (user) {
-    if (user.password === req.body.password) {
-      const sessionId = enrollSession.generateSessionID();
-      enrollSession.addSession(sessionId, user.id, user.name);
 
-      res.cookie('loginSession', sessionId);
-      result = { result: 'success', name: user.name };
-    } else {
-      result = { result: 'fail' };
-    }
-  } else {
-    result = { result: 'fail' };
+  if (!user || user.password !== req.body.password) {
+    res.json({ result: 'fail' });
+    return;
   }
-  res.json(result);
-};
 
-router.post('/', login);
+  const sessionId = enrollSession.generateSessionID();
+  enrollSession.addSession(sessionId, user.id, user.name);
+
+  res.cookie('loginSession', sessionId);
+  res.json({ result: 'success', name: user.name });
+}
 
 /**
  * Check is session id include session database
  */
-const checkCookie = (req, res, next) => {
+function checkSessionExist(req, res, next) {
   const session = enrollSession.findSession(req.cookies.loginSession);
   if (session) {
     req.isLogin = true;
@@ -43,27 +51,6 @@ const checkCookie = (req, res, next) => {
     req.isLogin = false;
   }
   next();
-};
-
-router.get('/', checkCookie, function (req, res, next) {
-  let result = {};
-  if (req.isLogin) {
-    result = {
-      result: 'find',
-      name: req.name,
-    };
-  } else {
-    result = {
-      result: 'none',
-    };
-  }
-  res.json(result);
-});
-
-router.get('/expire', function (req, res, next) {
-  if (enrollSession.deleteSession(req.cookies.loginSession)) {
-    res.json({ result: 'success' });
-  }
-});
+}
 
 module.exports = router;
