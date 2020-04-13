@@ -17,7 +17,7 @@ const enrollUser = {
    * @param {Object} data user form data
    */
   addUser(data) {
-    if (this.getUserById(data.id) !== undefined) return false;
+    if (this.getUserById(data.userid) !== undefined) return false;
     db.get('users')
       .push({
         id: data.userid,
