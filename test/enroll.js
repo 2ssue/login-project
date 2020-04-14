@@ -3,10 +3,11 @@ const app = require('../app.js');
 const request = require('supertest');
 
 describe('회원가입 테스트', () => {
+  const randomUser = `user${new Date().getTime()}`;
   const newUser = {
-    userid: 'user01',
+    userid: randomUser,
     password: 'Password123!',
-    name: 'user01',
+    name: randomUser,
     year: 2020,
     month: 04,
     date: 13,
