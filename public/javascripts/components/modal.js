@@ -1,7 +1,7 @@
 import Reset from './reset.js';
 import Validation from './validation.js';
 import { post } from '../utils/fetch.js';
-import { login } from '../routing.js';
+import { login } from '../router.js';
 
 const ModalEvent = {
   body: document.querySelector('body'),

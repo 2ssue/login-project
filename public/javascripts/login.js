@@ -1,4 +1,4 @@
-import { login } from './routing.js';
+import { login } from './router.js';
 
 const observer = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
