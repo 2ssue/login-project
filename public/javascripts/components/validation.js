@@ -41,7 +41,9 @@ const Validation = {
       const checkId = idInput.value.match(/^[a-z0-9-_]{5,20}$/);
       if (checkId !== null && idInput.value === checkId[0]) {
         get(`enroll/user?id=${idInput.value}`).then((res) => {
-          if (res === 'true') {
+          const { result } = JSON.parse(res);
+
+          if (result) {
             setMessage(message, SIGN_UP_MESSAGE.ID.VALID, Enum.VALID_CLASS);
             this.id = true;
           } else {
