@@ -40,4 +40,14 @@ describe('회원가입 테스트', () => {
         assert.equal(res.body.result, 'fail');
       });
   });
+
+  it('유저의 아이디 중복을 확인함', () => {
+    request(app)
+      .get('/enroll/user?id=asdf')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        assert.equal(res.body.result, false);
+      });
+  });
 });
