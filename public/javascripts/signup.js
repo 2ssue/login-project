@@ -4,9 +4,12 @@ import Validation from './components/validation.js';
 import MakeTag from './components/tag.js';
 
 const observer = new MutationObserver(function (mutations) {
-  mutations.forEach(function (mutation) {
-    if ('회원가입' === mutation.addedNodes[0].innerText) execute();
-  });
+  const [mainContent] = [...mutations];
+  const [headerNode] = [...mainContent.addedNodes];
+
+  if ('회원가입' === headerNode.innerText) {
+    onSignUp();
+  }
 });
 
 const config = {
@@ -15,9 +18,9 @@ const config = {
 
 observer.observe(document.querySelector('main'), config);
 
-execute();
+onSignUp();
 
-function execute() {
+function onSignUp() {
   Validation.enrollEventListener();
   RestrictInput.enrollEventListener();
   ModalEvent.enrollEventListener();

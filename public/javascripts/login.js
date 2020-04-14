@@ -2,9 +2,12 @@ import { post } from './utils/fetch.js';
 import { Routing } from './router.js';
 
 const observer = new MutationObserver(function (mutations) {
-  mutations.forEach(function (mutation) {
-    if ('로그인' === mutation.addedNodes[0].innerText) onlogin();
-  });
+  const [mainContent] = [...mutations];
+  const [headerNode] = [...mainContent.addedNodes];
+
+  if ('로그인' === headerNode.innerText) {
+    onlogin();
+  }
 });
 
 const config = {
