@@ -15,6 +15,8 @@ const config = {
 
 observer.observe(document.querySelector('main'), config);
 
+execute();
+
 function execute() {
   Validation.enrollEventListener();
   RestrictInput.enrollEventListener();
@@ -45,5 +47,3 @@ function execute() {
     }
   });
 }
-
-execute();
