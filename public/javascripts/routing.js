@@ -3,9 +3,11 @@ import { INDEX_MESSAGE } from './components/enum.js';
 import { Routing } from './router.js';
 import { onSignUp } from './signup.js';
 import { onLogin } from './login.js';
+import { onMain } from './main.js';
 
 if (checkCookieExist()) {
   Routing.router('/main');
+  onMain();
 } else {
   Routing.router(window.location.pathname);
 }
@@ -33,6 +35,9 @@ const observer = new MutationObserver((mutations) => {
       break;
     case '로그인':
       onLogin();
+      break;
+    case '':
+      onMain();
       break;
   }
 });

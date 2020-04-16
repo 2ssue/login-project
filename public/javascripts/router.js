@@ -1,4 +1,4 @@
-import { get, post } from './utils/fetch.js';
+import { get } from './utils/fetch.js';
 import { INDEX_MESSAGE, SOURCE } from './components/enum.js';
 
 const Routing = {
@@ -18,21 +18,9 @@ const Routing = {
         document.querySelector('main > div').innerHTML = INDEX_MESSAGE.GREETING_MAIN;
       });
     },
-    '/main': async () => {
-      return await get(SOURCE.MAIN_HTML).then((res) => {
-        history.replaceState({ path: '/' }, null, '/');
+    '/main': function () {
+      get(SOURCE.MAIN_HTML).then((res) => {
         Routing.render(res, ['unshow', 'unshow', 'show']);
-        get('/user').then((res) => {
-          const result = JSON.parse(res);
-          if (result.result === 'none') {
-            Routing.router('/');
-            document.cookie = 'loginSession' + INDEX_MESSAGE.EXPIRE;
-          } else {
-            document.querySelector(
-              'main > div',
-            ).innerHTML = `${result.name}${INDEX_MESSAGE.GREETING_LOGIN}`;
-          }
-        });
       });
     },
     '/login': function () {
