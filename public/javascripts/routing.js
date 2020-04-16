@@ -4,8 +4,9 @@ import { Routing } from './router.js';
 import { onSignUp } from './signup.js';
 import { onLogin } from './login.js';
 import { onMain } from './main.js';
+import { parseCookies } from './utils/utils.js';
 
-if (checkCookieExist()) {
+if (checkLoginSession() && window.location.pathname === '/') {
   Routing.router('/main');
   onMain();
 } else {
@@ -64,19 +65,32 @@ function checkClickLink(e) {
 }
 
 function changeHistory(e) {
-  if (checkCookieExist()) {
-    Routing.router('/main');
-  } else {
-    Routing.router(e.state.path ? e.state.path : '/');
+  const { state } = e;
+
+  if (!state) {
+    if (checkLoginSession()) {
+      Routing.router('/main');
+      return;
+    }
+    Routing.router('/');
+    return;
   }
+
+  if (state.path === '/' && checkLoginSession()) {
+    Routing.router('/main');
+    return;
+  }
+
+  Routing.router(state.path);
 }
 
 function pushHistory(e) {
   const path = e.target.getAttribute('href');
-  history.pushState({ path }, null, path);
+  history.pushState({ path }, '', path);
   Routing.router(path);
 }
 
-function checkCookieExist() {
-  return document.cookie ? true : false;
+function checkLoginSession() {
+  const cookies = parseCookies(document.cookie);
+  return cookies.loginSession ? true : false;
 }

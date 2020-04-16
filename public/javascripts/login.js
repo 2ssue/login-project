@@ -28,6 +28,8 @@ function login() {
     } else {
       alert(INDEX_MESSAGE.INVALID_LOGIN);
     }
+
+    history.pushState({ path: '/' }, '', '/');
   });
 }
 
