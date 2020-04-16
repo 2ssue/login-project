@@ -1,6 +1,6 @@
 import { post } from './utils/fetch.js';
 import { Routing } from './router.js';
-import { INDEX_MESSAGE } from './components/enum.js';
+import { INDEX_MESSAGE } from './modules/enum.js';
 
 function onLogin() {
   const loginButton = document.querySelector('button');

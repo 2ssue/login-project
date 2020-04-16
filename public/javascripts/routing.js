@@ -1,5 +1,5 @@
 import { get } from './utils/fetch.js';
-import { INDEX_MESSAGE } from './components/enum.js';
+import { INDEX_MESSAGE } from './modules/enum.js';
 import { Routing } from './router.js';
 import { onSignUp } from './signup.js';
 import { onLogin } from './login.js';

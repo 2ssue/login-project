@@ -1,5 +1,5 @@
 import { get } from './utils/fetch.js';
-import { INDEX_MESSAGE, SOURCE } from './components/enum.js';
+import { INDEX_MESSAGE, SOURCE } from './modules/enum.js';
 
 const Routing = {
   main: document.querySelector('main'),

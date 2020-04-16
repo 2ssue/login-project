@@ -1,6 +1,6 @@
 import { get } from './utils/fetch.js';
 import { Routing } from './router.js';
-import { INDEX_MESSAGE } from './components/enum.js';
+import { INDEX_MESSAGE } from './modules/enum.js';
 
 function onMain() {
   get('/user').then((res) => {

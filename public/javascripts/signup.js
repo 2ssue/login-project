@@ -1,7 +1,7 @@
-import RestrictInput from './components/restrict.js';
-import ModalEvent from './components/modal.js';
-import Validation from './components/validation.js';
-import MakeTag from './components/tag.js';
+import RestrictInput from './modules/restrict.js';
+import ModalEvent from './modules/modal.js';
+import Validation from './modules/validation.js';
+import MakeTag from './modules/tag.js';
 
 function onSignUp() {
   Validation.enrollEventListener();
