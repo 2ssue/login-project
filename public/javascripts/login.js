@@ -1,5 +1,6 @@
-import { post } from './utils/fetch.js';
-import { Routing } from './router.js';
+import { post } from "./utils/fetch.js";
+import { Routing } from "./router.js";
+import { INDEX_MESSAGE } from "./components/enum.js";
 
 const observer = new MutationObserver(function (mutations) {
   const [mainContent] = [...mutations];
