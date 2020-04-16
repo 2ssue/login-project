@@ -1,24 +1,8 @@
-import { post } from "./utils/fetch.js";
-import { Routing } from "./router.js";
-import { INDEX_MESSAGE } from "./components/enum.js";
+import { post } from './utils/fetch.js';
+import { Routing } from './router.js';
+import { INDEX_MESSAGE } from './components/enum.js';
 
-const observer = new MutationObserver(function (mutations) {
-  const [mainContent] = [...mutations];
-  const [headerNode] = [...mainContent.addedNodes];
-
-  if ('로그인' === headerNode.innerText) {
-    onlogin();
-  }
-});
-
-const config = {
-  childList: true,
-};
-
-observer.observe(document.querySelector('main'), config);
-onlogin();
-
-function onlogin() {
+function onLogin() {
   const loginButton = document.querySelector('button');
   loginButton.addEventListener('click', (event) => {
     event.preventDefault();
@@ -47,4 +31,4 @@ function login() {
   });
 }
 
-export { login };
+export { login, onLogin };

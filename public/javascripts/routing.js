@@ -1,6 +1,8 @@
 import { get } from './utils/fetch.js';
 import { INDEX_MESSAGE } from './components/enum.js';
 import { Routing } from './router.js';
+import { onSignUp } from './signup.js';
+import { onLogin } from './login.js';
 
 if (checkCookieExist()) {
   Routing.router('/main');
@@ -20,6 +22,26 @@ document.querySelector('header nav').addEventListener('click', (e) => {
 
   pushHistory(e);
 });
+
+const observer = new MutationObserver((mutations) => {
+  const [mainContent] = [...mutations];
+  const [headerNode] = [...mainContent.addedNodes];
+
+  switch (headerNode.innerText) {
+    case '회원가입':
+      onSignUp();
+      break;
+    case '로그인':
+      onLogin();
+      break;
+  }
+});
+
+const config = {
+  childList: true,
+};
+
+observer.observe(document.querySelector('main'), config);
 
 function logout() {
   get('/user/expire').then((res) => {

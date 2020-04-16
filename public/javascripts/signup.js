@@ -3,23 +3,6 @@ import ModalEvent from './components/modal.js';
 import Validation from './components/validation.js';
 import MakeTag from './components/tag.js';
 
-const observer = new MutationObserver(function (mutations) {
-  const [mainContent] = [...mutations];
-  const [headerNode] = [...mainContent.addedNodes];
-
-  if ('회원가입' === headerNode.innerText) {
-    onSignUp();
-  }
-});
-
-const config = {
-  childList: true,
-};
-
-observer.observe(document.querySelector('main'), config);
-
-onSignUp();
-
 function onSignUp() {
   Validation.enrollEventListener();
   RestrictInput.enrollEventListener();
@@ -42,11 +25,10 @@ function onSignUp() {
   });
 
   window.addEventListener('click', (e) => {
-    if (
-      e.target !== tagSection &&
-      e.target !== document.getElementById('hobby')
-    ) {
+    if (e.target !== tagSection && e.target !== document.getElementById('hobby')) {
       tagSection.style.outline = 'none';
     }
   });
 }
+
+export { onSignUp };

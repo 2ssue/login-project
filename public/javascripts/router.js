@@ -15,8 +15,7 @@ const Routing = {
     '/': () => {
       get(SOURCE.MAIN_HTML).then((res) => {
         Routing.render(res, ['show', 'show', 'unshow']);
-        document.querySelector('main > div').innerHTML =
-          INDEX_MESSAGE.GREETING_MAIN;
+        document.querySelector('main > div').innerHTML = INDEX_MESSAGE.GREETING_MAIN;
       });
     },
     '/main': async () => {
@@ -39,19 +38,11 @@ const Routing = {
     '/login': function () {
       get(SOURCE.LOGIN_HTML).then((res) => {
         Routing.render(res, ['unshow', 'show', 'unshow']);
-        const script = document.createElement('script');
-        script.src = SOURCE.LOGIN_JS;
-        script.type = 'module';
-        Routing.main.appendChild(script);
       });
     },
     '/signup': function () {
       get(SOURCE.SIGNUP_HTML).then((res) => {
         Routing.render(res, ['show', 'unshow', 'unshow']);
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.src = SOURCE.SIGNUP_JS;
-        Routing.main.appendChild(script);
       });
     },
   },
