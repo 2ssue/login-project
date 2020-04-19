@@ -6,4 +6,6 @@ const parseCookies = (cookies) => {
   }, {});
 };
 
-export { parseCookies };
+const $ = (query, base = document) => base.querySelector(query);
+
+export { parseCookies, $ };

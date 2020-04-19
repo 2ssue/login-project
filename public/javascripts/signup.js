@@ -1,34 +1,47 @@
-import RestrictInput from './modules/restrict.js';
-import ModalEvent from './modules/modal.js';
-import Validation from './modules/validation.js';
-import MakeTag from './modules/tag.js';
+import { checkUserIdValidation } from './modules/validation.js';
+import { $ } from './utils/utils.js';
 
 function onSignUp() {
-  Validation.enrollEventListener();
-  RestrictInput.enrollEventListener();
-  ModalEvent.enrollEventListener();
-  MakeTag.enrollEventListener();
+  const input = getInputElements();
+  const noticeMessage = getInputNoticeMessageElements(input);
 
-  const tagSection = document.querySelector('.tag-section');
-  tagSection.addEventListener('click', () => {
-    document.getElementById('hobby').focus();
-    tagSection.style.outline = 'auto cornflowerblue';
-  });
+  input.userId.addEventListener('blur', async (e) => {
+    const [message, className] = await checkUserIdValidation(e);
 
-  const hobbyInput = document.getElementById('hobby');
-  hobbyInput.addEventListener('focus', () => {
-    tagSection.style.outline = 'auto cornflowerblue';
+    noticeMessage.userId.innerHTML = message;
+    noticeMessage.userId.classList.add(className);
   });
+}
 
-  hobbyInput.addEventListener('blur', () => {
-    tagSection.style.outline = 'none';
-  });
+function getInputElements() {
+  return {
+    userId: document.getElementById('userid'),
+    password: document.getElementById('password'),
+    passwordChecker: document.getElementById('re-password'),
+    name: document.getElementById('name'),
+    birth: {
+      year: document.getElementById('year'),
+      month: document.getElementById('month'),
+      date: document.getElementById('date'),
+    },
+    gender: document.getElementById('gender'),
+    email: document.getElementById('email'),
+    phone: document.getElementById('phone'),
+    hobby: document.getElementById('hobby'),
+    agree: document.getElementById('agree'),
+  };
+}
 
-  window.addEventListener('click', (e) => {
-    if (e.target !== tagSection && e.target !== document.getElementById('hobby')) {
-      tagSection.style.outline = 'none';
-    }
-  });
+function getInputNoticeMessageElements(inputs) {
+  return {
+    userId: inputs.userId.parentNode.lastElementChild,
+    password: inputs.password.parentNode.lastElementChild,
+    passwordChecker: inputs.passwordChecker.parentNode.lastElementChild,
+    birth: $('.birth+span'),
+    email: inputs.email.parentNode.lastElementChild,
+    phone: inputs.phone.parentNode.lastElementChild,
+    hobby: $('.tag-section+span'),
+  };
 }
 
 export { onSignUp };
