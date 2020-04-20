@@ -33,7 +33,7 @@ async function checkIdIsDuplicate(id) {
   const { result } = JSON.parse(response);
 
   if (!result) {
-    return [SIGN_UP_MESSAGE.ID.INVALID, Enum.INVALID_CLASS];
+    return [SIGN_UP_MESSAGE.ID.USED, Enum.INVALID_CLASS];
   }
 
   validationState.id = true;
