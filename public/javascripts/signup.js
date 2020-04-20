@@ -9,7 +9,7 @@ function onSignUp() {
     const [message, className] = await checkUserIdValidation(e);
 
     noticeMessage.userId.innerHTML = message;
-    noticeMessage.userId.classList.add(className);
+    noticeMessage.userId.className = className;
   });
 }
 
