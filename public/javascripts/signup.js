@@ -1,4 +1,8 @@
-import { checkUserIdValidation } from './modules/validation.js';
+import {
+  checkUserIdValidation,
+  checkUserPasswordValidation,
+  checkPasswordSame,
+} from './modules/validation.js';
 import { $ } from './utils/utils.js';
 
 function onSignUp() {
@@ -10,6 +14,20 @@ function onSignUp() {
 
     noticeMessage.userId.innerHTML = message;
     noticeMessage.userId.className = className;
+  });
+
+  input.password.addEventListener('keyup', (e) => {
+    const [message, className] = checkUserPasswordValidation(e, input.passwordChecker.value);
+
+    noticeMessage.password.innerHTML = message;
+    noticeMessage.password.className = className;
+  });
+
+  input.passwordChecker.addEventListener('keyup', (e) => {
+    const [message, className] = checkPasswordSame(input.password.value, e.target.value);
+
+    noticeMessage.password.innerHTML = message;
+    noticeMessage.password.className = className;
   });
 }
 

@@ -40,4 +40,47 @@ async function checkIdIsDuplicate(id) {
   return [SIGN_UP_MESSAGE.ID.VALID, Enum.VALID_CLASS];
 }
 
-export { checkUserIdValidation };
+function checkUserPasswordValidation(e, passwordChecker) {
+  validationState.password = false;
+
+  const password = e.target.value;
+  if (!password) return ['', Enum.INVALID_CLASS];
+
+  const passwordValidationResult = password.match(
+    /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/,
+  );
+
+  if (passwordValidationResult && password === passwordValidationResult[0]) {
+    if (passwordChecker) {
+      return checkPasswordSame(password, passwordChecker);
+    }
+    return [SIGN_UP_MESSAGE.PASSWORD.VALID, Enum.VALID_CLASS];
+  }
+
+  if (!password.match(/^.{8,16}$/)) {
+    return [SIGN_UP_MESSAGE.PASSWORD.INVALID_LENGTH, Enum.INVALID_CLASS];
+  }
+
+  if (!password.match(/[A-Z]+/)) {
+    return [SIGN_UP_MESSAGE.PASSWORD.INVALID_UPPERCASE, Enum.INVALID_CLASS];
+  }
+
+  if (!password.match(/\d+/)) {
+    return [SIGN_UP_MESSAGE.PASSWORD.INVALID_NUMBER, Enum.INVALID_CLASS];
+  }
+
+  if (!password.match(/[!@#$%^&+=]+/)) {
+    return [SIGN_UP_MESSAGE.PASSWORD.INVALID_CHARACTER, Enum.INVALID_CLASS];
+  }
+}
+
+function checkPasswordSame(password, passwordChecker) {
+  if (password === passwordChecker) {
+    validationState.password = true;
+    return [SIGN_UP_MESSAGE.PASSWORD.SAME, Enum.VALID_CLASS];
+  }
+
+  return [SIGN_UP_MESSAGE.PASSWORD.DIFFERENT, Enum.INVALID_CLASS];
+}
+
+export { checkUserIdValidation, checkUserPasswordValidation, checkPasswordSame };
