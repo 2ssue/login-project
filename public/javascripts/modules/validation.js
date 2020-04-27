@@ -75,6 +75,11 @@ function checkUserPasswordValidation(e, passwordChecker) {
 }
 
 function checkPasswordSame(password, passwordChecker) {
+  if (password === '' || passwordChecker === '') {
+    validationState.password = false;
+    return ['', Enum.INVALID_CLASS];
+  }
+
   if (password === passwordChecker) {
     validationState.password = true;
     return [SIGN_UP_MESSAGE.PASSWORD.SAME, Enum.VALID_CLASS];
