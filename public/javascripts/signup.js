@@ -9,6 +9,10 @@ function onSignUp() {
   const input = getInputElements();
   const noticeMessage = getInputNoticeMessageElements(input);
 
+  addValidationEventListner(input, noticeMessage);
+}
+
+function addValidationEventListner(input, noticeMessage) {
   input.userId.addEventListener('blur', async (e) => {
     const [message, className] = await checkUserIdValidation(e);
 

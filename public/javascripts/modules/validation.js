@@ -88,4 +88,9 @@ function checkPasswordSame(password, passwordChecker) {
   return [SIGN_UP_MESSAGE.PASSWORD.DIFFERENT, Enum.INVALID_CLASS];
 }
 
-export { checkUserIdValidation, checkUserPasswordValidation, checkPasswordSame };
+export {
+  checkIdIsDuplicate,
+  checkPasswordSame,
+  checkUserIdValidation,
+  checkUserPasswordValidation,
+};
