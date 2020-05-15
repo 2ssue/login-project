@@ -6,13 +6,12 @@
 
 ## Update News, Version 2!
 
-현재 Version 2가 개발 중에 있습니다. 개발 진행 상황은 [Project](https://github.com/2ssue/login-project/projects/1)에서 확인할 수 있으며, Version 2는 리팩토링 진행 후 아래 기능을 추가할 예정입니다.
+리팩토링을 거친 Version 2가 개발 중에 있습니다. Version 2는 리팩토링 진행 후 아래 기능을 추가할 예정입니다.
 
 - 사용자 비밀번호 암호화 후 저장
 - 서버에서 유저의 회원가입 입력값 검증
 - RESTful API로 API 형태 변경
 - API 문서화
-- 회원가입 로직 변경
 - 파일 모듈화
 - ...
 
